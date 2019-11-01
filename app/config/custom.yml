@@ -1,0 +1,5 @@
+version: '3'
+scales:
+  - name: "balanza 1"
+    port: "COM3"
+    bauds: 9600
