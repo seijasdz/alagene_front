@@ -11,6 +11,10 @@ const create = async (req, res) => {
     publish(JSON.stringify(prediction));
     res.status(HTTPStatus.CREATED).json(prediction);
   } catch (e) {
+    const consumer = (message) => {
+      const body = JSON.parse(message.content.toString());
+      console.log(body)
+    }
     res.status(HTTPStatus.BAD_REQUEST).json({ message: e.message });
   }
 };
@@ -33,8 +37,22 @@ const get = async (req, res) => {
   }
 }
 
+const updateFromPredictor = async (fullMessage) => {
+  try {
+    const body = JSON.parse(fullMessage.content.toString());
+    const prediction = await Prediction.findById(body._id);
+    if (prediction) {
+      prediction.set({ result: body.result });
+      await prediction.save();
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 module.exports = {
   create,
   list,
   get,
+  updateFromPredictor,
 }
