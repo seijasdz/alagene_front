@@ -9,7 +9,7 @@ const PredictionSchema = new Schema({
     required: [true, 'dna is required']
   },
   result: {
-    type: [String]
+    type: mongoose.Schema.Types.Mixed
   }
 });
 
