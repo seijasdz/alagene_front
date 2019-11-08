@@ -4,6 +4,9 @@ const { Schema } = mongoose;
 const uniqueValidator = require('mongoose-unique-validator');
 
 const PredictionSchema = new Schema({
+  seq_id: {
+    type: String,
+  },
   dna: {
     type: String,
     required: [true, 'dna is required']

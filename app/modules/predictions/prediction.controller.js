@@ -2,6 +2,7 @@
 const HTTPStatus = require('http-status');
 const Prediction = require('./prediction.model');
 const { publisherPromise } = require('../../services/amqp');
+const { makeGff } = require('../../helpers/gffSerializer');
 
 
 const create = async (req, res) => {
@@ -31,9 +32,12 @@ const list = async (req, res) => {
 const get = async (req, res) => {
   try {
     const prediction = await Prediction.findById(req.params.id);
+    if (!prediction) {
+      return res.status(HTTPStatus.NOT_FOUND).json({ message: 'not found' });
+    }
     res.status(HTTPStatus.OK).json(prediction);
   } catch (e) {
-    res.status(HTTPStatus.NOT_FOUND).json({ message: 'not found'});
+    res.status(HTTPStatus.BAD_REQUEST).json({ message: 'not found'});
   }
 }
 
@@ -50,9 +54,23 @@ const updateFromPredictor = async (fullMessage) => {
   }
 }
 
+const getGff = async (req, res) => {
+  try {
+    const prediction = await Prediction.findById(req.params.id, 'seq_id result');
+    if (!prediction) {
+      return res.status(HTTPStatus.NOT_FOUND).json({ message: 'not found' });
+    }
+    makeGff(prediction);
+    return res.status(HTTPStatus.OK).json(prediction);
+  } catch (e) {
+    return res.status(HTTPStatus.BAD_REQUEST).json({ message: e.message });
+  }
+};
+
 module.exports = {
   create,
   list,
   get,
   updateFromPredictor,
+  getGff,
 }

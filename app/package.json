@@ -4,6 +4,7 @@
     "dev": "nodemon ./index.js"
   },
   "dependencies": {
+    "@gmod/gff": "^1.1.2",
     "amqplib": "^0.5.5",
     "compression": "^1.7.4",
     "express": "^4.17.1",
