@@ -60,8 +60,7 @@ const getGff = async (req, res) => {
     if (!prediction) {
       return res.status(HTTPStatus.NOT_FOUND).json({ message: 'not found' });
     }
-    makeGff(prediction);
-    return res.status(HTTPStatus.OK).json(prediction);
+    return res.status(HTTPStatus.OK).send(makeGff(prediction));
   } catch (e) {
     return res.status(HTTPStatus.BAD_REQUEST).json({ message: e.message });
   }

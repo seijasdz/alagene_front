@@ -40,7 +40,9 @@ const makeFeature = (seq_id, type, start, end, phase, attributes) => {
 };
 
 const makeGff = (pre) => {
-  const features = []
+  const features = [
+    { directive: "gff-version",  value: 3}
+  ]
   let geneC = 0;
   let cdsC = 0;
   let exonC = 0;
@@ -61,7 +63,7 @@ const makeGff = (pre) => {
       }
     } 
   }
-  console.log(gff.formatSync(features))
+  return gff.formatSync(features);
 }
  
 module.exports = {
