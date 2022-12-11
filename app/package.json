@@ -7,7 +7,7 @@
     "@gmod/gff": "^1.1.2",
     "amqplib": "^0.5.5",
     "compression": "^1.7.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "helmet": "^3.21.2",
     "http-status": "^1.4.0",
     "mongoose": "^5.7.7",
